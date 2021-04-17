@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.17)
+project(Network)
+set(CMAKE_CXX_STANDARD 20)
+#include_directories(headers source)
+set(SOURCE_LIB src/neuron.cc src/layer.cc src/network.cc)
+set(HEADERS_LIB include/neuron.hpp include/layer.hpp include/network.hpp)
+add_library(Network STATIC ${SOURCE_LIB} ${HEADERS_LIB})

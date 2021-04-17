@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.17)
+PROJECT(KnnMethod)
+include_directories(../../ETL/headers)
+set(CMAKE_CXX_STANDARD 20)
+set(HEADERS headers/KNN.h)
+set(SOURCE source/KNN.cpp)
+add_library(KnnMethod STATIC ${HEADERS} ${SOURCE})
+target_link_libraries(KnnMethod DataLib)

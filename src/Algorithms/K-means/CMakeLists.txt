@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.17)
+PROJECT(K-MeansMethod)
+include_directories(../../ETL/headers)
+set(CMAKE_CXX_STANDARD 20)
+set(HEADERS headers/Kmeans.h)
+set(SOURCE source/Kmeans.cpp)
+add_library(K-MeansMethod STATIC ${HEADERS} ${SOURCE})
