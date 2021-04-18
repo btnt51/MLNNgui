@@ -9,6 +9,12 @@ DataProcessor::DataProcessor() {
 
 }
 
+DataProcessor::DataProcessor(double TP, double TeP, double VP){
+    TrainingPercent = TP;
+    TestPercent = TeP;
+    ValidationPercent = VP;
+}
+
 DataProcessor::~DataProcessor() {
     for(Data *El : ArrayOfData){
         delete El;
@@ -101,7 +107,7 @@ void DataProcessor::SplitData() {
     int SizeForTraining = static_cast<int>(GetSizeOfArrayOfData() * TrainingPercent);
     int SizeForTesting = static_cast<int>(GetSizeOfArrayOfData() * TestPercent);
     int SizeForValidation = static_cast<int>(GetSizeOfArrayOfData() * ValidationPercent);
-    std::shuffle(ArrayOfData.begin(),ArrayOfData.end(), std::mt19937(std::random_device()()));
+    std::shuffle(ArrayOfData.begin(), ArrayOfData.end(), std::mt19937(std::random_device()()));
 
     //Splitting Training Data
     while(Counter < SizeForTraining){
@@ -244,6 +250,11 @@ void DataProcessor::Print() {
         std::cout << std::endl;
         std::cout << "--> " << El->GetLabel() << std::endl;
     }
+}
+
+void DataProcessor::operator=(DataProcessor obj)
+{
+    this->ArrayOfData = std::move(obj.ArrayOfData);
 }
 
 

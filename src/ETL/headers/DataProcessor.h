@@ -21,6 +21,7 @@
 class DataProcessor {
 public:
     DataProcessor();
+    DataProcessor(double, double, double);
     ~DataProcessor();
 
     [[nodiscard]] int GetCountsOfClasses() const                     { return this->CountsOfClasses; }
@@ -44,6 +45,7 @@ public:
     void NormalizeData(int AmountOfData);
     void Print();
 
+    void operator=(DataProcessor obj);
 
 private:
     int FeatureVectorSize{};
@@ -55,9 +57,9 @@ private:
     std::vector<Data *> DataForTesting{};
     std::vector<Data *> DataForValidation{};
 
-    const double TrainingPercent = 0.01;
-    const double TestPercent = 0.005;
-    const double ValidationPercent = 0.005;
+    double TrainingPercent = 0.01;
+    double TestPercent = 0.005;
+    double ValidationPercent = 0.005;
 };
 
 

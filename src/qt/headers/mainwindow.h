@@ -2,8 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../../ETL/headers/DataProcessor.h"
-#include "../../NEURAL_NETWORK/include/network.hpp"
+#include "neuralnetwork.h"
+#include "QBuffer"
+#include "QImageReader"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,8 +18,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     DataProcessor dp;
+    Network *net;
+    NeuralNetwork *netWindow;
 };
 #endif // MAINWINDOW_H

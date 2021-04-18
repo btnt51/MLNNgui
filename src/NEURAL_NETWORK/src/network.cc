@@ -5,7 +5,7 @@
 
 Network::Network(std::vector<int> spec, int inputSize, int numClasses, double learningRate) {
     std::cout << spec.size();
-    for(int i = 0; i < spec.size(); i++) {
+    for(int i = 0; i < static_cast<int>(spec.size()); i++) {
         if(i == 0)
             Layers.push_back(new Layer(inputSize, spec.at(i)));
         else
@@ -19,7 +19,7 @@ Network::~Network() {}
 
 double Network::ActivationEachNeuron(std::vector<double> Weights, std::vector<double> Inputs) {
     double Activation = Weights.back(); // bias term
-    for(int i = 0; i < Weights.size() - 1; i++)
+    for(int i = 0; i < static_cast<int>(Weights.size() - 1); i++)
         Activation += Weights[i] * Inputs[i];
     return Activation;
 }
@@ -33,22 +33,10 @@ double Network::Transfer(double Data, int Fashion){
 }
 
 
-std::vector<double> Network::ForwardPropagation(Data *data)
+std::vector<double> Network::ForwardPropagation(Data *Data)
 {
-    /*std::vector<double> Inputs = data->GetNormalizedFeatureVector();
-
-    for(auto &El : Layers) {
-        std::vector<double> NewInputs;
-        for(Neuron *Element : El->GetNeurons()) {
-            double activation = this->ActivationEachNeuron(Element->GetWeights(), Inputs);
-            Element->SetOutput(this->Transfer(activation));
-            NewInputs.push_back(Element->GetOutput());
-        }
-        Inputs = NewInputs;
-    }
-    return Inputs; // output layer outputs*/
-    std::vector<double> inputs = data->GetNormalizedFeatureVector();
-    for(int i = 0; i < Layers.size(); i++)
+    std::vector<double> inputs = Data->GetNormalizedFeatureVector();
+    for(int i = 0; i < static_cast<int>(Layers.size()); i++)
     {
         Layer *layer = Layers.at(i);
         std::vector<double> newInputs;
@@ -64,12 +52,12 @@ std::vector<double> Network::ForwardPropagation(Data *data)
 }
 
 
-void Network::BackPropagation(Data *data) {
+void Network::BackPropagation(Data *Data) {
     for(int i = static_cast<int>(Layers.size()) - 1; i >= 0; i--) {
         Layer *WorkingLayer = Layers.at(i);
         std::vector<double> errors;
-        if(i != Layers.size() - 1) {
-            for(int j = 0; j < WorkingLayer->GetNeurons().size(); j++) {
+        if(i != static_cast<int>(Layers.size() - 1)) {
+            for(int j = 0; j < static_cast<int>(WorkingLayer->GetNeurons().size()); j++) {
                 double error = 0.0;
                 for(Neuron *n : Layers.at(i + 1)->GetNeurons()) {
                     error += (n->Weights.at(j) * n->Delta);
@@ -78,13 +66,13 @@ void Network::BackPropagation(Data *data) {
             }
 
         } else {
-            for(int j = 0; j < WorkingLayer->GetNeurons().size(); j++) {
+            for(int j = 0; j < static_cast<int>(WorkingLayer->GetNeurons().size()); j++) {
                 Neuron *n = WorkingLayer->GetNeurons().at(j);
-                errors.push_back(static_cast<double >(data->GetClassVector().at(j) - n->Output)); // expected - actual
+                errors.push_back(static_cast<double >(Data->GetClassVector().at(j) - n->Output)); // expected - actual
             }
         }
 
-        for(int j = 0; j < WorkingLayer->GetNeurons().size(); j++) {
+        for(int j = 0; j < static_cast<int>(WorkingLayer->GetNeurons().size()); j++) {
             Neuron *n = WorkingLayer->GetNeurons().at(j);
             n->SetDelta(errors.at(j) * this->Transfer(n->Output, 1)); //gradient / derivative part of back prop.
         }
@@ -92,9 +80,9 @@ void Network::BackPropagation(Data *data) {
 }
 
 
-void Network::UpdateWeights(Data *data) {
-    std::vector<double> inputs = data->GetNormalizedFeatureVector();
-    for(int i = 0; i < Layers.size(); i++) {
+void Network::UpdateWeights(Data *Data) {
+    std::vector<double> inputs = Data->GetNormalizedFeatureVector();
+    for(int i = 0; i < static_cast<int>(Layers.size()); i++) {
         if(i != 0) {
             for(Neuron *n : Layers.at(i - 1)->GetNeurons()) {
                 inputs.push_back(n->Output);
@@ -102,7 +90,7 @@ void Network::UpdateWeights(Data *data) {
         }
 
         for(Neuron *n : Layers.at(i)->GetNeurons()) {
-            for(int j = 0; j < inputs.size(); j++) {
+            for(int j = 0; j < static_cast<int>(inputs.size()); j++) {
                 n->Weights.at(j) += this->LearningRate * n->Delta * inputs.at(j);
             }
             n->Weights.back() += this->LearningRate * n->Delta;
@@ -112,8 +100,8 @@ void Network::UpdateWeights(Data *data) {
 }
 
 
-int Network::Prediction(Data * data) {
-    std::vector<double> outputs = ForwardPropagation(data);
+int Network::Prediction(Data * Data) {
+    std::vector<double> outputs = ForwardPropagation(Data);
     return std::distance(outputs.begin(), std::max_element(outputs.begin(), outputs.end()));
 }
 
@@ -121,15 +109,15 @@ int Network::Prediction(Data * data) {
 void Network::Training(int AmountOfEpochs) {
     for(int i = 0; i < AmountOfEpochs; i++) {
         double SumOfErrors = 0.0;
-        for(Data *data : this->DataForTraining) {
-            std::vector<double > Outputs = ForwardPropagation(data);
-            std::vector<int > ExpectedResult = data->GetClassVector();
+        for(Data *Data : this->DataForTraining) {
+            std::vector<double > Outputs = ForwardPropagation(Data);
+            std::vector<int > ExpectedResult = Data->GetClassVector();
             double TempSumOfErrors = 0.0;
-            for(int j = 0; j < Outputs.size(); j++)
+            for(int j = 0; j < static_cast<int>(Outputs.size()); j++)
                 TempSumOfErrors += pow(static_cast<double >(ExpectedResult.at(j) - Outputs.at(j)), 2);
             SumOfErrors += TempSumOfErrors;
-            BackPropagation(data);
-            UpdateWeights(data);
+            BackPropagation(Data);
+            UpdateWeights(Data);
         }
 
         printf("Iteration: %d \t Error=%.4f\n", i, SumOfErrors);
@@ -140,10 +128,10 @@ void Network::Training(int AmountOfEpochs) {
 double Network::TestProduce() {
     double numCorrect = 0.0;
     double count = 0.0;
-    for(Data *data : this->DataForTesting) {
+    for(Data *Data : this->DataForTesting) {
         count++;
-        int index = Prediction(data);
-        if(data->GetClassVector().at(index) == 1) numCorrect++;
+        int index = Prediction(Data);
+        if(Data->GetClassVector().at(index) == 1) numCorrect++;
     }
 
     TestPerformance = (numCorrect / count);
@@ -154,10 +142,10 @@ double Network::TestProduce() {
 void Network::ValidationProduce() {
     double numCorrect = 0.0;
     double count = 0.0;
-    for(Data *data : this->DataForValidation) {
+    for(Data *Data : this->DataForValidation) {
         count++;
-        int index = Prediction(data);
-        if(data->GetClassVector().at(index) == 1) numCorrect++;
+        int index = Prediction(Data);
+        if(Data->GetClassVector().at(index) == 1) numCorrect++;
     }
 
     printf("ValidationProduce Performance: %.4f\n", numCorrect / count);
