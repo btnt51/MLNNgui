@@ -13,6 +13,7 @@ NeuralNetwork::NeuralNetwork(QWidget *parent, DataProcessor *dp) :
     DPofThisWindow.CountClasses();
     DPofThisWindow.SplitData();
     ui->Predict->setVisible(false);
+    this->setWindowTitle("Neural network");
 }
 
 NeuralNetwork::~NeuralNetwork()
@@ -20,9 +21,8 @@ NeuralNetwork::~NeuralNetwork()
     delete ui;
 }
 
-void NeuralNetwork::netTrain(std::vector<int> specVector){
-    qDebug() <<
-                DPofThisWindow.GetDataForTraining().at(0)->GetNormalizedFeatureVector().size();
+void NeuralNetwork::netTrain(){
+    std::vector<int> specVector{10};
     net = new Network(specVector,
                       DPofThisWindow.GetDataForTraining().at(0)->GetNormalizedFeatureVector().size(),
                       DPofThisWindow.GetCountsOfClasses(), 0.25);
@@ -33,33 +33,9 @@ void NeuralNetwork::netTrain(std::vector<int> specVector){
     net->ValidationProduce();
 }
 
-void NeuralNetwork::on_StartToTrainNet_clicked()
-{
-    std::vector<int> specVector;
-    QString SpecString = ui->AmountOfNeurons->text();
-    SpecString.append(" ");
-    auto l = SpecString.indexOf(" ");
-    std::vector<int> temp;
-    QString tempstr;
-    int k = 0;
-    while(k < ui->AmountOfLayers->text().toInt()){
-        for(int i = 0; i < l; i++){
-            tempstr.append(SpecString[i]);
-        }
-        k++;
-        SpecString.remove(0,l+1);
-        temp.push_back(tempstr.toInt());
-        l = SpecString.indexOf(" ");
-        tempstr.clear();
-    }
-    qDebug() << temp.at(0);
-    for(int i = 0; i < ui->AmountOfLayers->text().toInt(); i++){
-        specVector.push_back(temp.at(i));
-    }
-    //netTrain(specVector);
-    std::thread t1(&NeuralNetwork::netTrain, this, specVector);
+void NeuralNetwork::on_StartToTrainNet_clicked() {
+    std::thread t1(&NeuralNetwork::netTrain, this);
     t1.join();
-    qDebug() << "3" << ui->LearningRate->text().toDouble();
 
     QMessageBox msb;
     msb.setWindowTitle("Net is ready!");

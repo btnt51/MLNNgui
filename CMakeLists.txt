@@ -32,10 +32,13 @@ set(PROJECT_SOURCES
         src/qt/source/main.cpp
         src/qt/source/mainwindow.cpp
         src/qt/source/neuralnetwork.cpp
+        src/qt/source/kmeans.cpp
         src/qt/headers/mainwindow.h
         src/qt/headers/neuralnetwork.h
+        src/qt/headers/kmeans.h
         src/qt/ui/mainwindow.ui
         src/qt/ui/neuralnetwork.ui
+        src/qt/ui/kmeans.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

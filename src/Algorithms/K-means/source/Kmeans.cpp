@@ -115,9 +115,8 @@ double KMeansMethod::ValidateProduce() {
 
         }
         //std::cout << static_cast<int>(El->GetLabel()) << " -->" << Clusters.at(Index)->TheMostFrequentClass << "\n";
-        if(Clusters.at(Index)->TheMostFrequentClassOfCluster == static_cast<int>(El->GetLabel())) {
+        if(Clusters.at(Index)->TheMostFrequentClassOfCluster == static_cast<int>(El->GetLabel()))
             CorrectedData++;
-        }
     }
     return 100.0 *(CorrectedData / static_cast<double>(DataForValidation.size()));
 }
@@ -140,5 +139,20 @@ double KMeansMethod::TestProduce() {
         if(Clusters.at(Index)->TheMostFrequentClassOfCluster == El->GetLabel()) CorrectedData++;
     }
     return 100.0 *(CorrectedData / static_cast<double>(DataForTesting.size()));
+}
+
+int KMeansMethod::Predict(Data *El) {
+
+    double MinimalDistance = max;
+    int Index{};
+    for(int i = 0; i < Clusters.size();i++){
+        double Distance = GetDistance(Clusters.at(i)->Centroid, El);
+        if(Distance < MinimalDistance){
+            MinimalDistance = Distance;
+            Index = i;
+        }
+
+    }
+    return static_cast<int>(Clusters.at(Index)->TheMostFrequentClassOfCluster);
 }
 

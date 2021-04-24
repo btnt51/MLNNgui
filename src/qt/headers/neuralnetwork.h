@@ -18,7 +18,7 @@ public:
     explicit NeuralNetwork(QWidget *parent = nullptr, DataProcessor *dp = nullptr);
     ~NeuralNetwork();
 
-    void netTrain(std::vector<int>);
+    void netTrain();
 
 private slots:
     void on_StartToTrainNet_clicked();
