@@ -19,13 +19,14 @@ KMeansMethod::~KMeansMethod() {
 
 
 void KMeansMethod::InitClusters() {
+    Clusters.reserve(NumberOfClusters);
     for(int i=0; i < NumberOfClusters;i++){
         std::mt19937 Gen(time(nullptr)*DataForTraining.size());
         std::uniform_int_distribution<> UID(0, DataForTraining.size()-1);
         int Index = UID(Gen);
-        while(UsedIndexes.find(Index) != UsedIndexes.end()) {
+        while(UsedIndexes.find(Index) != UsedIndexes.end())
             Index = UID(Gen);
-        }
+
         //Clusters.push_back(new ClusterOfData(DataForTraining.at(Index)));
         Clusters.push_back(new Cluster(DataForTraining.at(Index)));
         UsedIndexes.insert(Index);
@@ -43,7 +44,7 @@ void KMeansMethod::Train() {
 
         double MinimalDistance = max;
         int TheBestCluster{};
-        for(int i = 0; i < Clusters.size()-1; ++i){
+        for(int i = 0; i < static_cast<int>(Clusters.size()-1); ++i){
           double Distance = GetDistance(Clusters.at(i)->Centroid, DataForTraining.at(Index));
             if(Distance < MinimalDistance){
                 MinimalDistance = Distance;
@@ -59,7 +60,7 @@ void KMeansMethod::Train() {
 
 void KMeansMethod::InitClustersForEachClass() {
     std::unordered_set<int> ProcessedClasses;
-    for(int i = 0; i < DataForTraining.size();i++){
+    for(int i = 0; i < static_cast<int>(DataForTraining.size());i++){
         if(ProcessedClasses.find(DataForTraining.at(i)->GetLabel()) == ProcessedClasses.end()){
             //Clusters.push_back(new ClusterOfData (DataForTraining.at(i)));
             Clusters.push_back(new Cluster(DataForTraining.at(i)));
@@ -106,7 +107,7 @@ double KMeansMethod::ValidateProduce() {
         double MinimalDistance = max;
         int Index{};
 
-        for(int i = 0; i < Clusters.size();i++){
+        for(int i = 0; i < static_cast<int>(Clusters.size());i++){
             double Distance = GetDistance(Clusters.at(i)->Centroid, El);
             if(Distance < MinimalDistance){
                 MinimalDistance = Distance;
@@ -128,7 +129,7 @@ double KMeansMethod::TestProduce() {
         double MinimalDistance = max;
         int Index{};
 
-        for(int i = 0; i < Clusters.size();i++){
+        for(int i = 0; i < static_cast<int>(Clusters.size());i++){
             double Distance = GetDistance(Clusters.at(i)->Centroid, El);
             if(Distance < MinimalDistance){
                 MinimalDistance = Distance;
@@ -142,10 +143,9 @@ double KMeansMethod::TestProduce() {
 }
 
 int KMeansMethod::Predict(Data *El) {
-
     double MinimalDistance = max;
     int Index{};
-    for(int i = 0; i < Clusters.size();i++){
+    for(int i = 0; i < static_cast<int>(Clusters.size()); i++){
         double Distance = GetDistance(Clusters.at(i)->Centroid, El);
         if(Distance < MinimalDistance){
             MinimalDistance = Distance;
@@ -155,4 +155,3 @@ int KMeansMethod::Predict(Data *El) {
     }
     return static_cast<int>(Clusters.at(Index)->TheMostFrequentClassOfCluster);
 }
-

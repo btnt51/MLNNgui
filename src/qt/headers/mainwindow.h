@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "neuralnetwork.h"
+#include "kmeans.h"
+#include "knn.h"
 #include "QBuffer"
 #include "QImageReader"
 
@@ -21,10 +23,16 @@ public:
 private slots:
     void on_NetWindowButton_clicked();
 
+    void on_KMeansButton_clicked();
+
+    void on_KNNButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    DataProcessor dp;
-    Network *net;
-    NeuralNetwork *netWindow;
+    DataProcessor DP;
+    Network *Net;
+    NeuralNetwork *NetWindow;
+    kmeans *KMeansWindow;
+    knn *KNNWindow;
 };
 #endif // MAINWINDOW_H

@@ -83,7 +83,7 @@ public:
     double GetDistance(std::vector<double> *, Data *, int Fashion = 2);
     double ValidateProduce();
     double TestProduce();
-
+    int Predict(Data *El);
     std::vector<Cluster *> GetClusters() { return Clusters;}
 
 private:

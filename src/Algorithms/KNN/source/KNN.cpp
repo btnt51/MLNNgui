@@ -46,7 +46,7 @@ void KnnMethod::FindKNearest(Data *QueryPoint) {
     int Index{};
     for(int i = 0; i < NumberOfNeighbors; i++){
         if(i == 0){
-            for(int j = 0; j < DataForTraining.size(); j++) {
+            for(int j = 0; j < static_cast<int>(DataForTraining.size()); j++) {
                 double Distance = CalculateDistance(QueryPoint, DataForTraining.at(j));
                 DataForTraining.at(j)->SetDistance(Distance);
                 if (Distance < Minimum) {
@@ -59,7 +59,7 @@ void KnnMethod::FindKNearest(Data *QueryPoint) {
             Minimum = max;
 
         } else {
-            for(int j = 0; j < DataForTraining.size(); j++){
+            for(int j = 0; j < static_cast<int>(DataForTraining.size()); j++){
                 double Distance = DataForTraining.at(j)->GetDistance();
                 if(Distance > PreviousMinimum && Distance < Minimum){
                     Minimum = Distance;
@@ -99,7 +99,7 @@ int KnnMethod::GetTheMostFrequentClass() {
 double KnnMethod::CalculateDistance(Data *QueryPoint, Data *Input, int Fashion) {
     double Distance{};
     int Dimensionality = QueryPoint->GetNormalizedFeatureVector().size();
-    if(Dimensionality != Input->GetNormalizedFeatureVector().size()){
+    if(Dimensionality != static_cast<int>(Input->GetNormalizedFeatureVector().size())){
         std::cout << "Vector size mismatch.\n";
         exit(1);
     }
@@ -109,7 +109,7 @@ double KnnMethod::CalculateDistance(Data *QueryPoint, Data *Input, int Fashion) 
         default:
         {
             //Default method for finding distance in Euclid distance d(x,y)=sqrt((sigma((xi-yi)^2))/m)
-            for(unsigned i = 0; i < Dimensionality;++i)
+            for(unsigned i = 0; i < static_cast<unsigned>(Dimensionality);++i)
                 Distance += pow(QueryPoint->GetNormalizedFeatureVector().at(i) -
                         Input->GetNormalizedFeatureVector().at(i), 2);
             Distance /= Dimensionality;
@@ -117,7 +117,7 @@ double KnnMethod::CalculateDistance(Data *QueryPoint, Data *Input, int Fashion) 
         }
         case 1: {
             //Manhattan distance by Minkowski metric d(x,y) = sigma(|xi-yi|)
-            for (unsigned i = 0; i < Dimensionality; ++i) {
+            for (unsigned i = 0; i < static_cast<unsigned>(Dimensionality); ++i) {
                 Distance += std::abs(
                         QueryPoint->GetNormalizedFeatureVector().at(i) - Input->GetNormalizedFeatureVector().at(i));
             }
@@ -125,7 +125,7 @@ double KnnMethod::CalculateDistance(Data *QueryPoint, Data *Input, int Fashion) 
         }
         case 2:{
             //Euclid distance by Minkowski metric d(x,y) = sqrt(sigma((xi - yi)^2))
-            for(unsigned i = 0; i < Dimensionality;++i){
+            for(unsigned i = 0; i < static_cast<unsigned>(Dimensionality);++i){
                 Distance += pow(QueryPoint->GetNormalizedFeatureVector().at(i)
                                 - Input->GetNormalizedFeatureVector().at(i),2);
             }

@@ -185,6 +185,12 @@ void DataProcessor::NormalizeData(int AmountOfData) {
     }
 }
 
+void DataProcessor::SetDataPercent(double TP, double TEP, double VP){
+    this->TrainingPercent = TP;
+    this->TestPercent = TEP;
+    this->ValidationPercent = VP;
+}
+
 
 uint32_t DataProcessor::CastData(const unsigned char *Bytes) {
     return (uint32_t)((Bytes[0] << 24) | (Bytes[1] << 16)| (Bytes[2] << 8) | (Bytes[3] << 0));

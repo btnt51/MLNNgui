@@ -16,6 +16,7 @@ NeuralNetwork::NeuralNetwork(QWidget *parent, DataProcessor *dp) :
     this->setWindowTitle("Neural network");
 }
 
+
 NeuralNetwork::~NeuralNetwork()
 {
     delete ui;

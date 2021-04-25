@@ -43,6 +43,7 @@ public:
     void SplitData();
     void CountClasses();
     void NormalizeData(int AmountOfData);
+    void SetDataPercent(double TP, double TE, double TV);
     void Print();
 
     void operator=(DataProcessor obj);

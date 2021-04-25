@@ -2,6 +2,7 @@
 #define KMEANS_H
 
 #include <QDialog>
+#include <QDebug>
 #include "../ETL/headers/DataProcessor.h"
 #include "../Algorithms/K-means/headers/Kmeans.h"
 
@@ -25,7 +26,8 @@ private slots:
 private:
     Ui::kmeans *ui;
     DataProcessor DP;
-    KMeansMethod KMM;
+    KMeansMethod *KMM;
+    int SpecVar;
 
 };
 
