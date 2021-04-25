@@ -10,6 +10,8 @@ kmeans::kmeans(QWidget *parent, DataProcessor *dp) :
     SpecVar = 0;
     ui->Predict->setVisible(false);
     setWindowTitle("K-Means windows");
+    setWindowFlag(Qt::WindowContextHelpButtonHint,false);
+    IsPushed = false;
 }
 
 
@@ -19,29 +21,32 @@ kmeans::~kmeans() {
 
 
 void kmeans::on_StartToTrainAlg_clicked() {
-    int BestK = 0,Performance = 0, BestPerformance = 0;
-    for(int k = 1; k < 30; k++) {
-           auto *km = new KMeansMethod(k);
-           km->SetDataForTraining(DP.GetDataForTraining());
-           km->SetDataForTesting(DP.GetDataForTesting());
-           km->SetDataForValidation(DP.GetDataForValidation());
-           km->InitClusters();
-           km->Train();
-           qDebug() << km->ValidateProduce();
-           Performance = km->ValidateProduce();
-           printf("Current Performance @ K = %d: %.2f\n", k, Performance);
-           if(Performance > BestPerformance) {
-               BestPerformance = Performance;
-               BestK = k;
+    if(!IsPushed){
+        IsPushed = true;
+        int BestK = 0,Performance = 0, BestPerformance = 0;
+        for(int k = 1; k < 30; k++) {
+               auto *km = new KMeansMethod(k);
+               km->SetDataForTraining(DP.GetDataForTraining());
+               km->SetDataForTesting(DP.GetDataForTesting());
+               km->SetDataForValidation(DP.GetDataForValidation());
+               km->InitClusters();
+               km->Train();
+               //qDebug() << km->ValidateProduce();
+               Performance = km->ValidateProduce();
+               if(Performance > BestPerformance) {
+                   BestPerformance = Performance;
+                   BestK = k;
+               }
            }
-       }
-       KMM = new KMeansMethod(BestK);
-       KMM->SetDataForTraining(DP.GetDataForTraining());
-       KMM->SetDataForTesting(DP.GetDataForTesting());
-       KMM->SetDataForValidation(DP.GetDataForValidation());
-       KMM->InitClusters();
-       KMM->Train();
-       ui->Predict->setVisible(true);
+           KMM = new KMeansMethod(BestK);
+           KMM->SetDataForTraining(DP.GetDataForTraining());
+           KMM->SetDataForTesting(DP.GetDataForTesting());
+           KMM->SetDataForValidation(DP.GetDataForValidation());
+           KMM->InitClusters();
+           KMM->Train();
+           ui->Predict->setVisible(true);
+    } else
+        return;
 }
 
 
@@ -51,8 +56,6 @@ void kmeans::on_Predict_clicked() {
     QImage temp = im.scaled(140, 140,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     temp.invertPixels();
     ui->Picture->setPixmap(QPixmap::fromImage(temp));
-    qDebug() << "Percentage" << KMM->ValidateProduce();
-    qDebug() << "Prediction " << QString::number(KMM->Predict(DP.GetDataForValidation().at(SpecVar))) << "Real number" << DP.GetDataForValidation().at(SpecVar)->GetLabel();
     ui->PredictionOfKMeans->setText(QString::number(KMM->Predict(DP.GetDataForValidation().at(SpecVar))));
     SpecVar++;
 }

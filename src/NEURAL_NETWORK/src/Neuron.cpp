@@ -1,4 +1,4 @@
-#include "../include/neuron.hpp"
+#include "../include/Neuron.h"
 #include <random>
 
 double generateRandomNumber(double min, double max)
@@ -7,7 +7,7 @@ double generateRandomNumber(double min, double max)
     return min + random * (max - min);
 }
 
-Neuron::Neuron(int previousLayerSize, int currentLayerSize)
+Neuron::Neuron(int previousLayerSize)
 {
     InitializeWeights(previousLayerSize);
 }

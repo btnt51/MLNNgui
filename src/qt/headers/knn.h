@@ -28,6 +28,7 @@ private:
     DataProcessor DP;
     KnnMethod *KNN;
     int SpecVar;
+    bool IsPushed;
 };
 
 #endif // KNN_H

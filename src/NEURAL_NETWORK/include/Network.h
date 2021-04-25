@@ -2,8 +2,8 @@
 #define NETWORK_HPP
 
 #include "../../ETL/headers/Data.h"
-#include "neuron.hpp"
-#include "layer.hpp"
+#include "Neuron.h"
+#include "Layer.h"
 #include "../../ETL/headers/GeneralizedDataContainer.h"
 
 class Network : public GeneralizedDataContainer
@@ -14,6 +14,7 @@ class Network : public GeneralizedDataContainer
     std::vector<double> ForwardPropagation(Data *data);
     double ActivationEachNeuron(std::vector<double> Weights, std::vector<double> Inputs); // dot product
     double Transfer(double Data, int Fashion = 0);
+    double GetTestPerformance() { return this->TestPerformance;}
 
     int Prediction(Data *data); // return the index of the maximum value in the output array.
     double TestProduce();
@@ -21,6 +22,7 @@ class Network : public GeneralizedDataContainer
     void BackPropagation(Data *data);
     void UpdateWeights(Data *data);
     void Training(int AmountOfEpochs); // real Gym
+
 
 private:
     std::vector<Layer *> Layers;

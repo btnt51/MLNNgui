@@ -6,8 +6,11 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    DP.ReadInputData("D:\\c++\\guimlnn\\MLNNgui\\dataset\\train-images.idx3-ubyte");
-    DP.ReadInputLabel("D:\\c++\\guimlnn\\MLNNgui\\dataset\\train-labels.idx1-ubyte");
+    QWidget *p = new QWidget();
+    p->setLayout(ui->gridLayout);
+    setCentralWidget(p);
+    DP.ReadInputData("C:\\code\\MLNNgui\\dataset\\train-images.idx3-ubyte");
+    DP.ReadInputLabel("C:\\code\\MLNNgui\\dataset\\train-labels.idx1-ubyte");
     this->setWindowTitle("Neural network!");
     ui->NetWindowButton->setText("Neural network window");
     ui->KMeansButton->setText("K-Means window");

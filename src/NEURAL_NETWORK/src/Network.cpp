@@ -1,5 +1,5 @@
-#include "../include/network.hpp"
-#include "../include/layer.hpp"
+#include "../include/Network.h"
+//#include "../include/Layer.h"
 #include "../../ETL/headers/DataProcessor.h"
 #include <numeric>
 
@@ -120,7 +120,7 @@ void Network::Training(int AmountOfEpochs) {
             UpdateWeights(Data);
         }
 
-        printf("Iteration: %d \t Error=%.4f\n", i, SumOfErrors);
+      //  printf("Iteration: %d \t Error=%.4f\n", i, SumOfErrors);
     }
 }
 
@@ -148,5 +148,5 @@ void Network::ValidationProduce() {
         if(Data->GetClassVector().at(index) == 1) numCorrect++;
     }
 
-    printf("ValidationProduce Performance: %.4f\n", numCorrect / count);
+   // printf("ValidationProduce Performance: %.4f\n", numCorrect / count);
 }

@@ -28,6 +28,7 @@ private:
     DataProcessor DP;
     KMeansMethod *KMM;
     int SpecVar;
+    bool IsPushed;
 
 };
 

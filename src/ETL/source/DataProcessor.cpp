@@ -46,9 +46,9 @@ void DataProcessor::ReadInputData(const std::string& PathToFile) {
             }
         }
 
-        std::cout << Header[0] << "|" << Header[1] << "|" << Header[2] << "|"  << Header[3] << std::endl;
+   //     std::cout << Header[0] << "|" << Header[1] << "|" << Header[2] << "|"  << Header[3] << std::endl;
         uint32_t SizeOfImage = Header[2] * Header[3];
-        std::cout << "Header was read\n";
+       // std::cout << "Header was read\n";
         for(int i = 0; i < Header[1];++i){
             Data *DataFromFile = new Data();
             uint8_t Pixel[1]{};
@@ -66,7 +66,7 @@ void DataProcessor::ReadInputData(const std::string& PathToFile) {
 
         NormalizeData(static_cast<int>(Header[1]));
         FeatureVectorSize = ArrayOfData.at(0)->GetFeatureVector().size();
-        std::cout << "All data was read\n";
+       // std::cout << "All data was read\n";
     } else {
         std::cout << "There is some problem with the path to file with Images\n";
         exit(1);
@@ -86,7 +86,7 @@ void DataProcessor::ReadInputLabel(const std::string& Path) {
             }
         }
 
-        std::cout << "Labels headers was read\n";
+       // std::cout << "Labels headers was read\n";
         for(unsigned int i = 0; i < Header[1];++i){
             uint8_t Label[1];
             if(fread(Label, sizeof(Label), 1, FileWithLabels)) {
@@ -94,7 +94,7 @@ void DataProcessor::ReadInputLabel(const std::string& Path) {
             }
         }
 
-        std::cout << "All labels was read\n";
+     //   std::cout << "All labels was read\n";
     } else {
         std::cout << "There is a problem with the path to file with Labels\n";
         exit(1);
@@ -128,9 +128,9 @@ void DataProcessor::SplitData() {
         DataForValidation.push_back(ArrayOfData.at(Index++));
         Counter++;
     }
-    std::cout << "There is data for training " << DataForTraining.size() << "." << std::endl <<
+    /*std::cout << "There is data for training " << DataForTraining.size() << "." << std::endl <<
     "There is data for testing " << DataForTesting.size() << "."<< std::endl <<
-    "There is data for validating " << DataForValidation.size() << "."<<std::endl;
+    "There is data for validating " << DataForValidation.size() << "."<<std::endl;*/
 }
 
 
@@ -149,7 +149,7 @@ void DataProcessor::CountClasses() {
     CountsOfClasses = Counter;
     for(Data *El : ArrayOfData)
         El->SetClassVector(CountsOfClasses);
-    std::cout << "Successfully extracted " << CountsOfClasses << " unique classes.\n";
+   // std::cout << "Successfully extracted " << CountsOfClasses << " unique classes.\n";
 }
 
 
@@ -194,38 +194,6 @@ void DataProcessor::SetDataPercent(double TP, double TEP, double VP){
 
 uint32_t DataProcessor::CastData(const unsigned char *Bytes) {
     return (uint32_t)((Bytes[0] << 24) | (Bytes[1] << 16)| (Bytes[2] << 8) | (Bytes[3] << 0));
-}
-
-
-void DataProcessor::ReadFromCSV(const std::string& Path, const std::string& Delemiter) {
-    CountsOfClasses=0;
-    std::ifstream FileWithData(Path.c_str());
-    std::string TempLine{};
-    while (std::getline(FileWithData, TempLine)){
-        if(TempLine.length() == 0) continue;
-        Data * DataFromFile = new Data();
-        size_t PositionInLine;
-        std::string Token{};
-
-        while((PositionInLine = TempLine.find(Delemiter)) != std::string::npos){
-            Token = TempLine.substr(0,PositionInLine);
-            DataFromFile->AppendToFeatureVector(std::stod(Token));
-            TempLine.erase(0,PositionInLine + Delemiter.length());
-        }
-
-        if(StringClass.find(TempLine) != StringClass.end())
-            DataFromFile->SetLabel(StringClass[TempLine]);
-        else {
-            StringClass[TempLine] = CountsOfClasses;
-            DataFromFile->SetLabel(StringClass[Token]);
-            CountsOfClasses++;
-        }
-        ArrayOfData.push_back(DataFromFile);
-    }
-
-    for(Data *El : ArrayOfData)
-        El->SetClassVector(CountsOfClasses);
-    FeatureVectorSize = ArrayOfData.at(0)->GetNormalizedFeatureVector().size();
 }
 
 

@@ -1,6 +1,6 @@
 #ifndef __LAYER_HPP
 #define __LAYER_HPP
-#include "neuron.hpp"
+#include "Neuron.h"
 #include <cstdint>
 #include <vector>
 

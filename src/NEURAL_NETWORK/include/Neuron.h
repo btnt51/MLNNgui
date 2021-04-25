@@ -6,7 +6,7 @@
 
 class Neuron {
   public:
-    Neuron(int, int);
+    Neuron(int);
     void InitializeWeights(int);
     void SetDelta(double Value) { Delta = Value; }
     void SetOutput(double Value) { Output = Value; }

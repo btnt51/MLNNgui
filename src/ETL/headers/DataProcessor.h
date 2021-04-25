@@ -37,7 +37,6 @@ public:
 
     static uint32_t CastData(const unsigned char *Bytes);
 
-    void ReadFromCSV(const std::string&, const std::string&);
     void ReadInputData(const std::string&);
     void ReadInputLabel(const std::string&);
     void SplitData();

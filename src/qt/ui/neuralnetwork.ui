@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>325</width>
-    <height>297</height>
+    <width>488</width>
+    <height>359</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>55</y>
+     <x>200</x>
+     <y>40</y>
      <width>20</width>
      <height>150</height>
     </rect>
@@ -50,8 +50,8 @@
   <widget class="Line" name="line_2">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>202</y>
+     <x>210</x>
+     <y>187</y>
      <width>150</width>
      <height>3</height>
     </rect>
@@ -81,8 +81,8 @@
   <widget class="Line" name="line_3">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>48</y>
+     <x>210</x>
+     <y>33</y>
      <width>150</width>
      <height>16</height>
     </rect>
@@ -112,8 +112,8 @@
   <widget class="Line" name="line_4">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>55</y>
+     <x>350</x>
+     <y>40</y>
      <width>20</width>
      <height>150</height>
     </rect>
@@ -143,8 +143,8 @@
   <widget class="QLabel" name="Picture">
    <property name="geometry">
     <rect>
-     <x>145</x>
-     <y>60</y>
+     <x>215</x>
+     <y>45</y>
      <width>140</width>
      <height>140</height>
     </rect>
@@ -168,14 +168,14 @@
     </size>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
   <widget class="QLabel" name="PictureLabel">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>25</y>
+     <x>210</x>
+     <y>10</y>
      <width>151</width>
      <height>16</height>
     </rect>
@@ -200,58 +200,6 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QLabel" name="SymbolOnPicture">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>215</y>
-     <width>91</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Number on picture</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="RealNumber">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>215</y>
-     <width>47</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="PredNet">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>245</y>
-     <width>91</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Prediction of net</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="PredictionOfNet">
-   <property name="geometry">
-    <rect>
-     <x>240</x>
-     <y>240</y>
-     <width>47</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QPushButton" name="Predict">
    <property name="geometry">
     <rect>
@@ -264,6 +212,120 @@
    <property name="text">
     <string>Predict</string>
    </property>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>195</y>
+     <width>160</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="1" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>10</width>
+        <height>10</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="RealNumber">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>10</width>
+        <height>10</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="SymbolOnPicture">
+      <property name="text">
+       <string>Number on picture</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="PredNet">
+      <property name="text">
+       <string>Prediction of net</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="PredictionOfNet">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>260</y>
+     <width>160</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QLabel" name="Percentage">
+      <property name="text">
+       <string>% of erros of net</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>10</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QLabel" name="PercentageOfErOfNet">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

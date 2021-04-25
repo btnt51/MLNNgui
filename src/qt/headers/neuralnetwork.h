@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <QMessageBox>
 #include "../../ETL/headers/DataProcessor.h"
-#include "../../NEURAL_NETWORK/include/network.hpp"
+#include "../../NEURAL_NETWORK/include/Network.h"
 
 namespace Ui {
 class NeuralNetwork;
@@ -28,8 +28,9 @@ private slots:
 private:
     Ui::NeuralNetwork *ui;
     DataProcessor DPofThisWindow;
-    Network *net;
+    Network *Net;
     int SpecVar = 0;
+    bool IsPushed;
 };
 
 #endif // NEURALNETWORK_H

@@ -149,7 +149,7 @@ double KnnMethod::ValidateProduce() {
     }
 
     auto CurrentProduce = static_cast<double>((Counter * 100.0) / DataForValidation.size());
-    std::cout << "ValidationProduce produce for Number of neighbors " << NumberOfNeighbors << " = " << CurrentProduce << "\n";
+    //std::cout << "ValidationProduce produce for Number of neighbors " << NumberOfNeighbors << " = " << CurrentProduce << "\n";
     return CurrentProduce;
 }
 
@@ -163,6 +163,6 @@ double KnnMethod::TestProduce() {
     }
 
     auto CurrentProduce = static_cast<double>((Counter * 100.0) / DataForTesting.size());
-    std::cout << "Test produce for number of neighbors " << NumberOfNeighbors << " = " << CurrentProduce << "\n";
+    //std::cout << "Test produce for number of neighbors " << NumberOfNeighbors << " = " << CurrentProduce << "\n";
     return CurrentProduce;
 }

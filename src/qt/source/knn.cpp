@@ -10,7 +10,9 @@ knn::knn(QWidget *parent, DataProcessor *dp) :
     DP.SplitData();
     ui->Predict->setVisible(false);
     setWindowTitle("K-NN window");
+    setWindowFlag(Qt::WindowContextHelpButtonHint,false);
     SpecVar = 0;
+    IsPushed = false;
 }
 
 knn::~knn()
@@ -21,7 +23,33 @@ knn::~knn()
 
 void knn::on_StartToTrainAlg_clicked()
 {
-    KNN = new KnnMethod(3, DP.GetDataForTraining(),
+    if(!IsPushed){
+        IsPushed = true;
+        KNN = new KnnMethod(3, DP.GetDataForTraining(),
+        DP.GetDataForTesting(), DP.GetDataForValidation());
+        double Performance = 0, BestPerformance = 0;
+        int BestK = 1;
+        for(int k = 1; k <= 5; k++) {
+            if(k == 1) {
+                Performance = KNN->ValidateProduce();
+                BestPerformance = Performance;
+            } else {
+                KNN->SetTheNumberOfNeighbors(k);
+                Performance = KNN->ValidateProduce();
+                if(Performance > BestPerformance) {
+                    BestPerformance = Performance;
+                    BestK = k;
+                }
+            }
+        }
+
+        KNN->SetTheNumberOfNeighbors(BestK);
+        KNN->TestProduce();
+        ui->Predict->setVisible(true);
+    }
+    else
+        return;
+    /*KNN = new KnnMethod(3, DP.GetDataForTraining(),
     DP.GetDataForTesting(), DP.GetDataForValidation());
     double Performance = 0, BestPerformance = 0;
     int BestK = 1;
@@ -40,8 +68,9 @@ void knn::on_StartToTrainAlg_clicked()
     }
 
     KNN->SetTheNumberOfNeighbors(BestK);
-    KNN->TestProduce();
+    double per = KNN->TestProduce();
     ui->Predict->setVisible(true);
+    ui->PercentageOfErOfKNN->setText(QString::number((1.0-per)*100));*/
 }
 
 
@@ -52,9 +81,7 @@ void knn::on_Predict_clicked()
     QImage temp = im.scaled(140, 140,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
     temp.invertPixels();
     ui->Picture->setPixmap(QPixmap::fromImage(temp));
-    qDebug() << "Percentage" << KNN->ValidateProduce();
     KNN->FindKNearest(DP.GetDataForValidation().at(SpecVar));
-    qDebug() << "Prediction " << QString::number(KNN->GetTheMostFrequentClass()) << "Real number" << DP.GetDataForValidation().at(SpecVar)->GetLabel();
     ui->PredictionOfKNN->setText(QString::number(KNN->GetTheMostFrequentClass()));
     SpecVar++;
 }
